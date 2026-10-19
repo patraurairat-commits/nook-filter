@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nook — breathe better, with nook nasal filters</title>
+<meta name="description" content="Reimagining personal respiratory protection through bioinspired design.">
+<meta property="og:title" content="nook — breathe better, with nook nasal filters">
+<meta property="og:description" content="Reimagining personal respiratory protection through bioinspired design.">
+<meta property="og:image" content="poster.jpg">
+<meta name="theme-color" content="#2f7fa8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #fff;
+    --dark: #14262e;
+    --font: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--font);
+    color: var(--ink);
+    background: #2f7fa8 url("poster.jpg") center / cover;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bg {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  .shade {
+    position: fixed; inset: 0; z-index: 1;
+    background:
+      radial-gradient(ellipse at center, rgba(10,40,60,.18), rgba(10,40,60,.38) 100%),
+      linear-gradient(to top, rgba(10,40,60,.35), transparent 40%);
+  }
+  main {
+    position: relative; z-index: 2;
+    height: 100%; min-height: 100svh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 24px 16px 120px;
+  }
+  h1 {
+    font-weight: 500; letter-spacing: -.045em; line-height: .9;
+    font-size: clamp(88px, 17vw, 240px);
+    text-shadow: 0 2px 40px rgba(10,40,60,.25);
+    animation: rise 1.4s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .tag {
+    margin-top: clamp(14px, 2vw, 28px);
+    font-weight: 400; letter-spacing: -.01em;
+    font-size: clamp(18px, 2.4vw, 32px);
+    animation: rise 1.4s .15s cubic-bezier(.2,.7,.2,1) both;
+  }
+  form {
+    margin-top: clamp(32px, 5vw, 64px);
+    width: min(440px, 100%);
+    display: flex; flex-direction: column; gap: 10px;
+    animation: rise 1.4s .3s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .lead {
+    font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500;
+    margin-bottom: 4px; opacity: .92;
+  }
+  input, button {
+    font: inherit; height: 48px; border-radius: 999px; width: 100%;
+    font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500;
+  }
+  input {
+    text-align: center; color: var(--ink);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.7);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    outline: none; transition: background .2s, border-color .2s;
+  }
+  input::placeholder { color: var(--ink); opacity: .95; }
+  input:focus { background: rgba(255,255,255,.22); border-color: #fff; }
+  button {
+    border: 0; cursor: pointer; background: var(--dark); color: #fff;
+    transition: transform .2s, background .2s;
+  }
+  button:hover { background: #000; transform: translateY(-1px); }
+  button:disabled { opacity: .6; cursor: default; transform: none; }
+  .msg { min-height: 18px; font-size: 13px; letter-spacing: .02em; }
+  footer {
+    position: fixed; z-index: 2; left: 0; right: 0; bottom: 0;
+    padding: 0 clamp(20px, 3vw, 40px) clamp(20px, 3vw, 36px);
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
+  }
+  .sub {
+    max-width: 760px; font-weight: 700; font-size: clamp(22px, 3vw, 44px); line-height: 1.1; letter-spacing: -.025em;
+    text-align: left; animation: rise 1.4s .45s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .wip {
+    font-family: "EB Garamond", Garamond, "Times New Roman", serif;
+    font-weight: 400; font-style: italic;
+    font-size: clamp(24px, 2.4vw, 36px); letter-spacing: .08em; opacity: .95;
+    white-space: nowrap;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 600px) {
+    footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+    main { padding-bottom: 170px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+</head>
+<body>
+<video class="bg" autoplay muted loop playsinline preload="auto" poster="poster.jpg">
+  <source src="hero.mp4" type="video/mp4">
+</video>
+<div class="shade"></div>
+
+<main>
+  <h1>nook</h1>
+  <p class="tag">breathe better, with nook nasal filters</p>
+
+  <form id="signup" novalidate>
+    <label class="lead" for="email">Sign up to get the first nooks</label>
+    <input id="email" type="email" name="email" placeholder="Email address" autocomplete="email" required>
+    <button type="submit">Sign up</button>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </form>
+</main>
+
+<footer>
+  <p class="sub">Reimagining<br>personal respiratory protection<br>through bioinspired design</p>
+  <p class="wip">Clinical testing in progress...</p>
+</footer>
+
+<script>
+  // FormSubmit relays each sign-up to this inbox (first submission triggers a one-time activation email)
+  const ENDPOINT = "https://formsubmit.co/ajax/patra@nook-filter.com";
+
+  const form = document.getElementById("signup");
+  const msg = document.getElementById("msg");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = form.email.value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.textContent = "Please enter a valid email."; return; }
+    const btn = form.querySelector("button");
+    btn.disabled = true;
+    try {
+      if (ENDPOINT) {
+        const r = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ email, _subject: "New nook sign-up", _captcha: "false" })
+        });
+        if (!r.ok) throw new Error(r.status);
+      }
+      form.email.value = "";
+      msg.textContent = "You're on the list. Breathe easy.";
+    } catch (err) {
+      msg.textContent = "Something went wrong. Try again.";
+      btn.disabled = false;
+      return;
+    }
+    btn.disabled = false;
+  });
+</script>
+</body>
+</html>
